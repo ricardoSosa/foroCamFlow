@@ -29,35 +29,43 @@
     /*Método que inserta elementos nuevos a las tablas de la base de datos según
     el tipo de inserción.*/
 
-    public function insertar( $nombre_tabla, $datos ) {
+    public function insertar( $nombre_tabla, $atributos, $valores ) {
       $numero_atributos = count($datos);
+      $attrib1 = $atributos[ 'attrib1' ];
+      $val1 = $valores[ 'valor1' ];
 
       switch( $numero_atributos ) {
         case 1:
           $consulta = "INSERT INTO
-            $nombre_tabla ( attrib1 ) VALUES
-            ( :attrib1 )";
+            $nombre_tabla ( $attrib1 ) VALUES
+            ( :valor1 )";
           $datos_elemento = array(
-            ':attrib1' => $datos[ 'attrib1' ] );
+            ':valor1' => $datos[ 'valor1' ] );
           break;
 
         case 2:
+          $attrib2 = $atributos[ 'atrib2' ];
+          $val2 = $valores[ 'valor2' ];
           $consulta = "INSERT INTO
-            equipos ( attrib1, attrib2 ) VALUES
-            ( :attrib1, :attrib2 )";
+            equipos ( $attrib1, $attrib2 ) VALUES
+            ( :valor1, :valor2 )";
           $datos_elemento = array(
-            ':attrib1' => $datos[ 'attrib1' ],
-            ':attrib2' => $datos[ 'attrib2' ] );
+            ':valor1' => $valores[ 'valor1' ],
+            ':valor2' => $valores[ 'valor2' ] );
           break;
 
         case 3:
+          $attrib2 = $atributos[ 'atrib2' ];
+          $val2 = $valores[ 'valor2' ];
+          $attrib3 = $atributos[ 'atrib3' ];
+          $val3 = $valores[ 'valor3' ];
           $consulta = "INSERT INTO
-            componentes ( attrib1, attrib2, attrib3 ) VALUES
-            ( :attrib1, :attrib2, :attrib3 )";
+            componentes ( $attrib1, $attrib2, $attrib3 ) VALUES
+            ( :valor1, :valor2, :valor3 )";
           $datos_elemento = array(
-            ':attrib1' => $datos[ 'attrib1' ],
-            ':attrib2' => $datos[ 'attrib2' ],
-            ':attrib3' => $datos[ 'attrib3' ] );
+            ':valor1' => $valores[ 'valor1' ],
+            ':valor2' => $valores[ 'valor2' ],
+            ':valor3' => $valores[ 'valor3' ] );
           break;
       }
 
@@ -69,13 +77,16 @@
 
     //Método que modifica información de las tablas de la base de datos.
 
-    public function modificar( $nombre_tabla, $datos ) {
-      $atrib_modificar = $datos['atrib_modificar'];
+    public function modificar( $nombre_tabla, $atributos, $valores ) {
+      $atrib_modificar = $atributos['atrib_modificar'];
+      $atrib_identificar = $atributos[ 'atrib_identificar' ];
+      $valor_modificar = $valores[ 'valor_modificar' ];
+      $valor_identificar = $valores[ 'valor_identificar' ];
       $consulta = "UPDATE $nombre_tabla SET $atrib_modificar = :dato_nuevo WHERE
-        id = :id";
+        $atrib_identificar = :id";
       $datos_elemento = array(
-        ':dato_nuevo' => $datos[ 'dato_nuevo' ],
-        ':id' => $datos[ 'id' ] );
+        ':dato_nuevo' => $valor_modificar,
+        ':id' => $valor_identificar );
 
       $resultado = $this->conexion->prepare( $consulta );
       $resultado->execute( $datos_elemento );
@@ -83,9 +94,9 @@
 
     //Método que elimina elementos de las tablas de la base de datos.
 
-    public function eliminar( $nombre_tabla, $id ) {
-      $consulta = "DELETE FROM $nombre_tabla WHERE id = :id";
-      $datos_elemento = array( 'id' => $id );
+    public function eliminar( $nombre_tabla, $atributo, $valor) {
+      $consulta = "DELETE FROM $nombre_tabla WHERE $atributo = :valor";
+      $datos_elemento = array( ':valor' => $valor );
 
       $resultado = $this->conexion->prepare( $consulta );
       $resultado->execute( $datos_elemento );
@@ -94,23 +105,21 @@
     /*Método que consulta información de las tablas de la base de datos y
     retorna los datos solicitados.*/
 
-    public function consultar_informacion( $nombre_tabla, $datos_consulta ) {
+    public function consultar_informacion( $nombre_tabla, $datos_consulta, $join) {
       switch( $datos_consulta[ 'tipo_consulta' ] ){
         case 'lista':
           $consulta = "SELECT * FROM $nombre_tabla";
           break;
 
         case 'especifico':
-          $id = $datos_consulta[ 'id' ];
-          if( $nombre_tabla == 'alumnos' || $nombre_tabla == 'profesores') {
-            $consulta = "SELECT * FROM $nombre_tabla INNER JOIN usuarios WHERE
-            id = $id";
-          } else if( $nombre_tabla == 'preguntas' ||
-            $nombre_tabla == 'respuestas' || $nombre_tabla == 'anuncios') {
-              $consulta = "SELECT * FROM $nombre_tabla INNER JOIN publicaciones WHERE
-              id = $id";
-          } else {
-              $consulta = "SELECT * FROM $nombre_tabla WHERE id = $id";
+          $atributo = $datos_consulta[ 'atributo' ];
+          $valor = $datos_consulta[ 'valor' ];
+          if( $join ){
+            $tabla_sec = $datos_consulta[ 'tabla_sec' ];
+            $consulta = "SELECT * FROM $nombre_tabla INNER JOIN $tabla_sec WHERE
+            $atributo = $valor";
+          } else{
+              $consulta = "SELECT * FROM $nombre_tabla WHERE $atributo = $valor";
           }
       }
 

@@ -19,9 +19,15 @@
 				'tipo_consulta' => especifico,
 				'id' => $matricula );
 
-			$usuario_existe = $this->manejador_bd->consultar_informacion(
+			$resultado = $this->manejador_bd->consultar_informacion(
 			'usuarios', $datos_consulta );
-			return usuario_existe;
+
+			if( $resultado == false ){
+				$usuario_existe = false
+			} else {
+				$usuario_existe = true;
+			}
+			return $usuario_existe;
 		}
 
 		//Método que verifica si la contraseña de un usuario es correcta.
@@ -44,10 +50,13 @@
 		//Ingresa un nuevo alumno en la tabla de alumnos y usuarios.
 
 		public function agregar_nuevo_alumno( $datos ) {
-			$datos_alumno = array(
-				'attrib1' => $datos[ 'matricula' ],
-				'attrib2' => $datos[ 'carrera' ] );
-			$this->manejador_bd->insertar( 'alumnos', $datos_alumno );
+			$atributos = array(
+				'attrib1' => 'matricula',
+				'attrib2' => 'carrera' );
+			$valores = array(
+				'valor1' => $datos[ 'matricula' ],
+				'valor2' => $datos[ 'carrera' ] );
+			$this->manejador_bd->insertar( 'alumnos', $atributos, $valores );
 
 			$this->agregar_usuario($datos);
 		}
@@ -66,25 +75,29 @@
 		//Ingresa un nuevo usuario a la tabla de usuarios.
 
 		public function agregar_usuario( $datos ) {
-			$datos_usuario = array(
-				'attrib1' => $datos[ 'matricula' ],
-				'attrib2' => $datos[ 'nombre' ],
+			$atributos = array(
+				'attrib1' => 'matricula',
+				'attrib2' => 'nombre',
+				'attrib3' => 'contraseña' );
+			$valores = array(
+				'valor1' => $datos[ 'matricula' ],
+				'valor2' => $datos[ 'carrera' ],
 				'attrib3' => $datos[ 'contraseña' ] );
 			$this->manejador_bd->insertar( 'usuarios', $datos_usuario );
 		}
 
 		//Elimina un alumno de la base de datos.
 
-		public function eliminar_alumno( $id_alumno ) {
-			$this->manejador_bd->eliminar( 'usuarios', $id_alumno );
-			$this->manejador_bd->eliminar( 'alumno', $id_alumno );
+		public function eliminar_alumno( $id ) {
+			$this->manejador_bd->eliminar( 'usuarios', 'matricula', $id );
+			$this->manejador_bd->eliminar( 'alumno', 'matricula', $id );
 		}
 
 		//Elimina un profesor de la base de datos.
 
-		public function eliminar_profesor( $id_profesor ) {
-			$this->manejador_bd->eliminar( 'usuarios', $id_profesor );
-			$this->manejador_bd->eliminar( 'profesores', $id_profesor );
+		public function eliminar_profesor( $id ) {
+			$this->manejador_bd->eliminar( 'usuarios', 'matricula', $id );
+			$this->manejador_bd->eliminar( 'profesores', 'matricula', $id );
 		}
 
 	}
