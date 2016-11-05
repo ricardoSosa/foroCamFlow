@@ -4,36 +4,41 @@
 
 	$administrador_acceso;
 
-
-
 	validar_acceso();
 
-	function validar_acceso(){
-
+	function validar_acceso() {
 		$administrador_acceso = new Administrador_acceso();
 
-		$nombreUsuario = $_POST[ 'nombre' ];
+		$matricula = $_POST[ 'matricula' ];
 		$contraseña = $_POST[ 'contraseña' ];
 
-		$contraseña_validar = $administrador_acceso->obtener_contra_usuario();
+		$aviso = new stdClass();
 
-		if( !$contraseña_validar ){
-			//hacer algo si es false
-		}else{
-			//la contraseña si esxiste
-			$obj = new stdClass();
-			$obj->status = true;
-
-			echo json_encode($obj);
-
+		$existe_matricula = $administrador_acceso->verificar_usuario();
+		if( $existe_matricula ) {
+			$existe_contraseña = $administrador_acceso->verificar_contra();
+			if( $existe_contraseña ) {
+				$aviso->estado_sesion = true;
+			} else {
+				$aviso->estado_sesion = false;
+				$aviso->problema = 'contraseña no encontrada';
+			}
+		} else {
+			$aviso->estado_sesion = false;
+			$aviso->problema = 'matricula no encontrada';
 		}
 
+		echo json_encode($aviso);
 	}
 
-	function cerrar_sesion(){
-
+	public function iniciar_sesion() {
+		$matricula = $_POST[ 'matricula' ];
+		$tiempo_expiracion = time()+3600*24*7; //1 semana.
+		setcookie( 'matricula', $matricula, $tiempo_expiracion, "/" );
 	}
 
+	public function cerrar_sesion() {
 
+	}
 
 ?>

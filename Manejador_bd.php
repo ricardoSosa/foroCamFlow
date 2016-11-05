@@ -92,7 +92,7 @@
     /*Método que consulta información de las tablas de la base de datos y
     retorna los datos solicitados.*/
 
-    public function consultar_informacion( $nombre_tabla, $datos ) {
+    public function consultar_informacion( $nombre_tabla, $datos_consulta ) {
       switch( $datos[ 'tipo_consulta' ] ){
         case 'lista':
           $consulta = "SELECT * FROM $nombre_tabla";
@@ -102,7 +102,7 @@
           $id = $datos[ 'id' ];
           $consulta = "SELECT * FROM $nombre_tabla WHERE id = '$id'";
       }
-
+      
       $resultado = $this->conexion->query( $consulta );
       return $resultado;
     }
