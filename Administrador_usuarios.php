@@ -12,39 +12,24 @@
 			$this->manejador_bd = new Manejador_bd();
 		}
 
-		//Método que verifica si existe una matrícula en la base de datos.
+		//Método que verifica si existe un usuario en la base de datos.
 
 		public function verificar_usuario( $matricula ) {
 			$datos = array(
 				'tipo_consulta' => especifico,
 				'id' => $matricula );
 
-			$resultado = $this->manejador_bd->consultar_informacion(
-			'usuarios', $datos_consulta );
-
-			if( $resultado == false ){
-				$usuario_existe = false
-			} else {
-				$usuario_existe = true;
-			}
-			return $usuario_existe;
-		}
-
-		//Método que verifica si la contraseña de un usuario es correcta.
-
-		public function verificar_contra( $matricula, $contraseña ) {
-			$datos_consulta = array(
-				'tipo_consulta' => especifico,
-				'id' => $matricula );
 			$datos_usuario = $this->manejador_bd->consultar_informacion(
 			'usuarios', $datos_consulta );
 
-			if( $contraseña = $datos_usuario[ 'contraseña' ] )
-				$contraseña_correcta = true;
-			else
-				$contraseña_correcta = false;
-
-			return $contraseña_correcta;
+			if( $datos_usuario == false ){
+				$usuario_correcto = false
+			} else if( $contraseña = $datos_usuario[ 'contraseña' ] ) {
+				$usuario_correcto = true;
+			} else{
+				$usuario_correcto = false;
+			}
+			return $usuario_correcto;
 		}
 
 		//Ingresa un nuevo alumno en la tabla de alumnos y usuarios.
@@ -89,15 +74,22 @@
 		//Elimina un alumno de la base de datos.
 
 		public function eliminar_alumno( $id ) {
-			$this->manejador_bd->eliminar( 'usuarios', 'matricula', $id );
 			$this->manejador_bd->eliminar( 'alumno', 'matricula', $id );
+			$this->eliminar_usuario( $id );
 		}
 
 		//Elimina un profesor de la base de datos.
 
 		public function eliminar_profesor( $id ) {
-			$this->manejador_bd->eliminar( 'usuarios', 'matricula', $id );
 			$this->manejador_bd->eliminar( 'profesores', 'matricula', $id );
+			$this->eliminar_usuario( $id );
+		}
+
+		//Elimina un usuario de la base de datos.
+
+		public function eliminar_usuario( $id ) {
+			$this->manejador_bd->eliminar( 'usuarios', 'matricula', $id );
+			$this->manejador_bd->eliminar( 'publicaciones_usuarios', 'matricula', $id );
 		}
 
 	}

@@ -12,33 +12,52 @@
 
     //Método que crea un nuevo foro.
 
-    public function crear_nuevo_foro( $datos_foro ) {
-      $this->manejador_bd = insertar( 'foros', $datos_foro );
+    public function crear_nuevo_foro( $datos ) {
+      $atributos = array(
+        'attrib1' => 'id',
+        'attrib2' => 'nombre'
+        'attrib3' => 'id_foro' );
+      $valores = array(
+        'valor1' => $datos[ 'id' ],
+        'valor2' => $datos[ 'nombre' ],
+        'valor3' => $datos[ 'id_foro' ] );
+      $this->manejador_bd = insertar( 'foros', $atributos, $valores );
     }
 
     //Método que agrega un nuevo tema a un foro existente.
 
     public function agregar_nuevo_tema( $datos_tema, $id_foro ) {
-      $this->manejador_bd = insertar( 'temas', $datos_tema );
+      $atributos = array(
+        'attrib1' => 'id',
+        'attrib2' => 'nombre'
+        'attrib3' => 'id_tema' );
+      $valores = array(
+        'valor1' => $datos_tema[ 'id' ],
+        'valor2' => $datos_tema[ 'nombre' ],
+        'valor3' => $datos_tema[ 'id_tema' ] );
+      $this->manejador_bd = insertar( 'temas', $atributos, $valores );
 
-      $datos_tema_foro = array(
-        'id_tema' => $datos_tema[ 'id_tema' ],
-        'id_foro' => $id_foro );
-      $this->manejador_bd = insertar( 'temas_foros', $datos_tema_foro );
+      $atributos = array(
+        'attrib1' => 'id_foro',
+        'attrib2' => 'id_tema' );
+      $valores = array(
+        'valor1' => $datos_tema[ 'id_foro' ],
+        'valor2' => $datos_tema[ 'id_tema' ] );
+      $this->manejador_bd = insertar( 'temas_foros', $atributos, $valores );
     }
 
     //Método elimina un tema en un foro existente.
 
-    public function eliminar_tema( $id_tema ) {
-      $this->manejador_bd = eliminar( 'temas', $id_tema );
-      $this->manejador_bd = eliminar( 'temas_foros', $id_tema );
+    public function eliminar_tema( $id ) {
+      $this->manejador_bd = eliminar( 'temas', 'id', $id );
+      $this->manejador_bd = eliminar( 'temas_foros', 'id_tema', $id );
     }
 
     //Método que elimina un foro.
 
-    public function eliminar_foro( $id_foro ) {
-      $this->manejador_bd = eliminar( 'foros', $id_foro );
-      $this->manejador_bd = eliminar( 'temas_foros', $id_foro );
+    public function eliminar_foro( $id ) {
+      $this->manejador_bd = eliminar( 'foros', 'id', $id );
+      $this->manejador_bd = eliminar( 'temas_foros', 'id_foro', $id );
     }
 
   }

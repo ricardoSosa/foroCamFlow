@@ -14,18 +14,11 @@
 
 		$aviso = new stdClass();
 
-		$existe_matricula = $administrador_acceso->verificar_usuario();
-		if( $existe_matricula ) {
-			$existe_contraseña = $administrador_acceso->verificar_contra();
-			if( $existe_contraseña ) {
-				$aviso->estado_sesion = true;
-			} else {
-				$aviso->estado_sesion = false;
-				$aviso->problema = 'contraseña no encontrada';
-			}
+		$usuario_correcto = $administrador_acceso->verificar_usuario();
+		if( $usuario_correcto ) {
+			$aviso->estado_sesion = true;
 		} else {
 			$aviso->estado_sesion = false;
-			$aviso->problema = 'matricula no encontrada';
 		}
 
 		echo json_encode($aviso);
