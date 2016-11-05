@@ -4,9 +4,9 @@
 
   class Manejador_bd {
 
-    const BASE_DATOS = 'mysql:host=localhost; dbname=proyecto_ces';
-    const USUARIO = 'root';
-    const CONTRASEÑA = '';
+    const BASE_DATOS = 'mysql:host=mysql.hostinger.mx; dbname=u587651001_foroc';
+    const USUARIO = 'u587651001_rechi';
+    const CONTRASEÑA = 'EayCH8z1vo';
 
     private $conexion;
 
