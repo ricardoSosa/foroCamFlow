@@ -32,13 +32,17 @@
 	}
 
 	public function iniciar_sesion() {
+		session_start();
+
 		$matricula = $_POST[ 'matricula' ];
+		$_SESSION[ 'matricula' ] = $_POST[ 'matricula' ];
 		$tiempo_expiracion = time()+3600*24*7; //1 semana.
 		setcookie( 'matricula', $matricula, $tiempo_expiracion, "/" );
 	}
 
 	public function cerrar_sesion() {
-
+		session_unset();
+		session_destroy();
 	}
 
 ?>
