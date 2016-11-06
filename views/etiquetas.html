@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="foro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Etiquetas</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/estilos-alumno.css" media="screen" title="no title">
+  <script src="js/jquery-3.1.1.min.js" charset="utf-8"></script>
+</head>
+<body ng-controller="ControladorEtiquetas as controlador">
+  <nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a href="#" class='navbar-brand'>Campus Overflow</a>
+
+        <ul class="nav navbar-nav">
+          <li><a href="#">Preguntas</a></li>
+          <li><a href="#">Etiquetas</a></li>
+        </ul>
+      </div>
+
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><p class="navbar-text">Juanito Perez</p></li>
+        <a href="#" class="navbar-brand navbar-right" data-toggle="dropdown">
+          <img src="img/icono.png" class="img-circle navbar-right img-alumno" alt="">
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Cerrar sesión</a></li>
+        </ul>
+      </ul>
+
+
+    </div>
+  </nav> <!--Fin del navbar-->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Etiquetas</h3>
+        <p>Una etiqueta es una palabra clave o un rótulo que categoriza tu
+          pregunta con otras preguntas similares. El uso de las etiquetas
+          correctas facilita que otros encuentren tu pregunta y la respondan.</p>
+      </div>
+    </div>
+
+    <div class="row text-center">
+      <div class="row">
+        <div class="col-sm-3 col-xs-3 col-md-3 well" ng-repeat="etiquetas in controlador.etiquetas">
+          <button type="button" class='btn {{etiquetas.tipo_tag}} btn-xs'>{{etiquetas.tag}}</button>
+          <p>{{etiquetas.descripcion}}</p>
+          <p>Cantidad de temas: {{etiquetas.num_temas}}</p>
+        </div>
+    </div>
+  </div>
+
+
+
+  <script src="js/bootstrap.js" charset="utf-8"></script>
+  <script src="js/angular.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

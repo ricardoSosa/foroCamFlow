@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="foro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Campus Overflow</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/estilos-alumno.css" media="screen" title="no title">
+  <script src="../js/jquery-3.1.1.min.js" charset="utf-8"></script>
+</head>
+<body ng-controller="ControladorAlumno as controlador">
+  <nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a href="#" class='navbar-brand'>Campus Overflow</a>
+
+        <ul class="nav navbar-nav">
+          <li><a href="#">Preguntas</a></li>
+          <li><a href="#">Etiquetas</a></li>
+        </ul>
+      </div>
+
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><p class="navbar-text">{{controlador.alumno.nombre}}</p></li>
+        <a href="#" class="navbar-brand navbar-right" data-toggle="dropdown">
+          <img src="../img/icono.png" class="img-circle navbar-right img-alumno" alt="">
+        </a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Cerrar sesión</a></li>
+        </ul>
+      </ul>
+
+
+    </div>
+  </nav> <!--Fin del navbar-->
+
+  <div class="container">
+    <div class="row tex-center">
+      <div class="col-md-4 well well-lg">
+
+        <div class="info-alumn">
+          <h3><span><i class="glyphicon glyphicon-user"></i></span> {{controlador.alumno.nombre}}</h3>
+          <p>Matricula: {{controlador.alumno.matricula}}</p>
+          <p>Carrera: {{controlador.alumno.carrera}}</p>
+        </div>
+
+      </div>
+
+      <div class="col-md-offset-2 col-md-6">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <span class="badge">14</span>
+            <i class="glyphicon glyphicon-envelope"></i> Mensajes
+          </li>
+          <li class="list-group-item">
+            <span class="badge">777</span>
+            <i class="glyphicon glyphicon-question-sign"></i> Preguntas Realizadas
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <h3><span><li class="glyphicon glyphicon-list-alt"></li></span> Preguntas de interes</h3>
+
+        <ul class="list-group">
+          <li class="list-group-item well" ng-repeat="favoritos in controlador.alumno.favoritos">
+            <div class="row">
+              <div class="col-md-9">
+                <h3>{{favoritos.nombre_preg}}</h3>
+                <p>Numero de respuestas: {{favoritos.num_res}}</p>
+                <p>Certeza: {{favoritos.certeza}}</p>
+                <p>Tags: <button class="btn btn-xs btn-success">{{favoritos.tag}}</button></p>
+              </div>
+              <div class="col-md-3">
+                <h3>Relevancia: {{favoritos.relevancia}}</h3>
+              </div>
+            </div>
+          </li> <!--fin de list-group-item well -->
+
+
+
+        </ul> <!--fin de list-group-item -->
+      </div>
+    </div>
+  </div>
+  <script src="../js/bootstrap.js" charset="utf-8"></script>
+  <script src="../js/angular.min.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

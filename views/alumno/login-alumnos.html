@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="foro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Inicio de sesión</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <script src="../js/jquery-3.1.1.min.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="../css/estilos-alumno.css" media="screen" title="no title">
+</head>
+<body ng-controller="ControladorAlumno as controlador">
+  <div class="container login">
+    <div class="row text-center">
+      <h1>Campus Overflow</h1>
+      <p class="lead">Alumnos</p>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3"></div>
+
+      <div class="col-md-6 well well-lg">
+        <form>
+          <div class="form-group">
+            <label for="matricula-alumn">Matricula Alumno</label>
+            <input type="text" class="form-control" id="matricula-alumn" placeholder="Matricula">
+          </div>
+
+          <div class="form-group">
+            <label for="contraseña-alumn">Contraseña</label>
+            <input type="password" class="form-control" id="contraseña-alumn" placeholder="Contraseña">
+          </div>
+
+        </form>
+
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary loguear">Iniciar Sesión</button>
+          <p>¿No tienes cuenta? <a href="registro-alumno.html">Registrate</a></p>
+          <p>¿Eres un profesor? Inica sesión <a href="../maestro/login-maestros.html">aquí</a></p>
+        </div>
+      </div>
+
+      <div class="col-md-3"></div>
+    </div>
+
+      </div>
+
+
+    <div class="container menu-prin">
+      <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+          <div class="navbar-header">
+            <a href="#" class='navbar-brand logo'>Campus Overflow</a>
+
+            <ul class="nav navbar-nav">
+              <li><a href="#" class="foro">Foros</a></li>
+              <li><a href="#" class="eti">Etiquetas</a></li>
+            </ul>
+          </div>
+
+
+          <ul class="nav navbar-nav navbar-right">
+            <li><p class="navbar-text">{{controlador.alumno.nombre}}</p></li>
+            <a href="#" class="navbar-brand navbar-right" data-toggle="dropdown">
+              <img src="../img/icono.png" class="img-circle navbar-right img-alumno" alt="">
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Cerrar sesión</a></li>
+            </ul>
+          </ul>
+
+
+        </div>
+      </nav> <!--Fin del navbar-->
+
+      <div class="container">
+        <div class="row tex-center">
+          <div class="col-md-4 well well-lg">
+
+            <div class="info-alumn">
+              <h3><span><i class="glyphicon glyphicon-user"></i></span> {{controlador.alumno.nombre}}</h3>
+              <p>Matricula: {{controlador.alumno.matricula}}</p>
+              <p>Carrera: {{controlador.alumno.carrera}}</p>
+            </div>
+
+          </div>
+
+          <div class="col-md-offset-2 col-md-6">
+            <ul class="list-group">
+              <li class="list-group-item">
+                <span class="badge">14</span>
+                <i class="glyphicon glyphicon-envelope"></i> Mensajes
+              </li>
+              <li class="list-group-item">
+                <span class="badge">777</span>
+                <i class="glyphicon glyphicon-question-sign"></i> Foros Realizadas
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+
+            <h3><span><li class="glyphicon glyphicon-list-alt"></li></span> Foros de interes</h3>
+
+            <ul class="list-group">
+              <li class="list-group-item well" ng-repeat="favoritos in controlador.alumno.favoritos">
+                <div class="row">
+                  <div class="col-md-9">
+                    <h3>{{favoritos.nombre_preg}}</h3>
+                    <p>Numero de respuestas: {{favoritos.num_res}}</p>
+                    <p>Certeza: {{favoritos.certeza}}</p>
+                    <p>Tags: <button class="btn btn-xs btn-success">{{favoritos.tag}}</button></p>
+                  </div>
+                  <div class="col-md-3">
+                    <h3>Relevancia: {{favoritos.relevancia}}</h3>
+                  </div>
+                </div>
+              </li> <!--fin de list-group-item well -->
+
+
+
+            </ul> <!--fin de list-group-item -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container etiquetas" ng-controller="ControladorEtiquetas as controlador">
+      <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+          <div class="navbar-header">
+            <a href="#" class='navbar-brand logo'>Campus Overflow</a>
+
+            <ul class="nav navbar-nav">
+              <li><a href="#" class="foro">Foros</a></li>
+              <li><a href="#" class="eti">Etiquetas</a></li>
+            </ul>
+          </div>
+
+
+          <ul class="nav navbar-nav navbar-right">
+            <li><p class="navbar-text">Juanito Perez</p></li>
+            <a href="#" class="navbar-brand navbar-right" data-toggle="dropdown">
+              <img src="../img/icono.png" class="img-circle navbar-right img-alumno" alt="">
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Cerrar sesión</a></li>
+            </ul>
+          </ul>
+
+
+        </div>
+      </nav> <!--Fin del navbar-->
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Etiquetas</h3>
+          <p>Una etiqueta es una palabra clave o un rótulo que categoriza tu
+            pregunta con otras preguntas similares. El uso de las etiquetas
+            correctas facilita que otros encuentren tu pregunta y la respondan.</p>
+        </div>
+      </div>
+
+      <div class="row text-center">
+        <div class="row">
+          <div class="col-sm-3 col-xs-3 col-md-3 well" ng-repeat="etiquetas in controlador.etiquetas">
+            <button type="button" class='btn {{etiquetas.tipo_tag}} btn-xs'>{{etiquetas.tag}}</button>
+            <p>{{etiquetas.descripcion}}</p>
+            <p>Cantidad de temas: {{etiquetas.num_temas}}</p>
+          </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="container foros" ng-controller="ControladorForo as controlador">
+      <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+          <div class="navbar-header">
+            <a href="#" class='navbar-brand logo'>Campus Overflow</a>
+
+            <ul class="nav navbar-nav">
+              <li><a href="#" class="foro">Foros</a></li>
+              <li><a href="#" class="eti">Etiquetas</a></li>
+            </ul>
+          </div>
+
+
+          <ul class="nav navbar-nav navbar-right">
+            <li><p class="navbar-text">Juanito Perez</p></li>
+            <a href="#" class="navbar-brand navbar-right" data-toggle="dropdown">
+              <img src="../img/icono.png" class="img-circle navbar-right img-alumno" alt="">
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Cerrar sesión</a></li>
+            </ul>
+          </ul>
+
+        </div>
+      </nav> <!--Fin del navbar-->
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 well">
+            <h3>Nombre del foro</h3>
+            <button class="btn btn-default btn-xs pull-right">TAG</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <ul class="list-group">
+            <li class="list-group-item" ng-repeat="temas in controlador.foro.temas_foro">
+              <h3>{{temas.nombre_tema}}</h3>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  <script src="../js/bootstrap.js" charset="utf-8"></script>
+  <script src="../js/angular.min.js" charset="utf-8"></script>
+  <script src="../js/login-alumno.js" charset="utf-8"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>
